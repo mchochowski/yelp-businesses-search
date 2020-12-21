@@ -32,8 +32,8 @@ module YelpBusinessesSearch
       {
         method: METHOD,
         url: url,
-        payload: payload,
-        headers: headers
+        headers: headers,
+        timeout: 10
       }
     end
 
@@ -44,7 +44,8 @@ module YelpBusinessesSearch
     def headers
       {
         authorization: "Bearer #{@config[:api_key]}",
-        accept: :json
+        accept: :json,
+        params: payload
       }
     end
   end
