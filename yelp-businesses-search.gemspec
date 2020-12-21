@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.files        = Dir['{lib}/**/*.rb', 'bin/*', 'LICENSE', '*.md']
   s.require_path = 'lib'
-  s.required_ruby_version = '>= 2.7'
+  s.required_ruby_version = '>= 2.6'
 
   s.add_dependency 'rest-client', '~> 2.1'
   s.add_development_dependency 'bundler', '2.2.2'
