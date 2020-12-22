@@ -32,13 +32,13 @@ RSpec.describe YelpBusinessesSearch::SearchEndpoint do
 
     it 'builds request payload with correct search term param' do
       expect(RestClient::Request).to receive(:execute)
-        .with(hash_including(payload: hash_including(term: query)))
+        .with(hash_including(headers: hash_including(params: hash_including(term: query))))
       subject.call
     end
 
     it 'builds request payload with correct location param' do
       expect(RestClient::Request).to receive(:execute)
-        .with(hash_including(payload: hash_including(location: zip_code)))
+        .with(hash_including(headers: hash_including(params: hash_including(location: zip_code))))
       subject.call
     end
 
@@ -51,8 +51,8 @@ RSpec.describe YelpBusinessesSearch::SearchEndpoint do
 
   context 'with request succesfully executed' do
     before do
-      stub_request(:get, 'https://api.yelp.com/v3/businesses/search')
-        .with(body: { latitude: nil, location: zip_code, longitude: nil, term: query })
+      stub_request(:get, 'https://api.yelp.com/v3/businesses/search?'\
+                         "latitude&location=#{zip_code}&longitude&term=#{query}")
         .to_return(status: 200, body: response_json)
     end
 
@@ -67,8 +67,8 @@ RSpec.describe YelpBusinessesSearch::SearchEndpoint do
 
   context 'with failing request' do
     before do
-      stub_request(:get, 'https://api.yelp.com/v3/businesses/search')
-        .with(body: { latitude: nil, location: zip_code, longitude: nil, term: query })
+      stub_request(:get, 'https://api.yelp.com/v3/businesses/search?'\
+                         "latitude&location=#{zip_code}&longitude&term=#{query}")
         .to_return(status: 429, body: {
           error: {
             code: 'ACCESS_LIMIT_REACHED',
